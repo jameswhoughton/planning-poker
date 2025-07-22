@@ -16,7 +16,7 @@ class PatchPlayerEndpointTest extends TestCase
 
     const ENDPOINT = '/room/%s/player/%s';
 
-    public function test_return_forbidden_if_playerId_does_not_match_cookie(): void
+    public function test_return_forbidden_if_player_id_does_not_match_cookie(): void
     {
         $room = Room::factory()->create();
 
@@ -45,8 +45,8 @@ class PatchPlayerEndpointTest extends TestCase
     }
 
     /**
-     * @param $payload array<string, array>
-     * @param $expectedErrors array<string>
+     * @param  $payload  array<string, array>
+     * @param  $expectedErrors  array<string>
      **/
     #[DataProvider('validationCases')]
     public function test_update_name_validation(array $payload, array $expectedErrors): void

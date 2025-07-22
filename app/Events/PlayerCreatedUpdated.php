@@ -24,7 +24,7 @@ class PlayerCreatedUpdated implements ShouldBroadcast
      */
     public function broadcastOn(): Channel
     {
-        return new Channel('room.' . $this->roomId);
+        return new Channel('room.'.$this->roomId);
     }
 
     public function broadcastWith(): array

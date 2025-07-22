@@ -12,7 +12,6 @@ use Tests\Traits\RefreshMongoDatabase;
 
 class PostPlayerEndpointTest extends TestCase
 {
-
     use RefreshMongoDatabase;
 
     const ENDPOINT = '/room/%s/player';
@@ -36,8 +35,8 @@ class PostPlayerEndpointTest extends TestCase
     }
 
     /**
-     * @param $payload array<string, array>
-     * @param $expectedErrors array<string>
+     * @param  $payload  array<string, array>
+     * @param  $expectedErrors  array<string>
      **/
     #[DataProvider('validationCases')]
     public function test_create_player_validation(array $payload, array $expectedErrors): void

@@ -22,7 +22,7 @@ class PostRoomEndpointTest extends TestCase
         $resp->assertSessionHas('roomId');
 
         $resp->assertInertia(
-            fn(Assert $page) => $page
+            fn (Assert $page) => $page
                 ->whereNull('playerId')
         );
     }

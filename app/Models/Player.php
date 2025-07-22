@@ -10,6 +10,7 @@ class Player extends Model
     use HasFactory;
 
     public $timestamps = false;
+
     protected $fillable = [
         'name',
     ];

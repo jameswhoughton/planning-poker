@@ -21,11 +21,11 @@ class PlayerController extends Controller
         return to_route('room:view', ['room' => $room]);
     }
 
-    public function update(PlayerRequest $request, Room $room, string $playerId): Response | RedirectResponse
+    public function update(PlayerRequest $request, Room $room, string $playerId): Response|RedirectResponse
     {
         $player = $room->players()->where('_id', $playerId)->first();
 
-        if (!$player) {
+        if (! $player) {
             abort(404);
         }
 
