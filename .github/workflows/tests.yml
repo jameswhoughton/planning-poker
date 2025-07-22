@@ -13,6 +13,20 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: 'mongo:latest'
+        env:
+          MONGODB_INITDB_ROOT_USERNAME:
+          MONGODB_INITDB_ROOT_PASSWORD:
+          MONGODB_INITDB_DATABASE: planning_poker
+        ports:
+            - '27017:27017'
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout
