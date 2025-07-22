@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useEchoPublic } from "@laravel/echo-vue";
-import { computed, ComputedRef, Ref, ref, onMounted } from "vue";
+import { Ref, ref, onMounted } from "vue";
 import ModalCreatePlayer from "@/components/Modals/ModalCreatePlayer.vue";
 
 type Player = {
@@ -51,8 +51,6 @@ useEchoPublic(
 )
 
 const players: Ref<Player[]> = ref<Player[]>([])
-
-const me: ComputedRef<Player | undefined> = computed<Player | undefined>(() => props.room.players.find((p: Player) => p.id === props.playerId))
 
 onMounted(() => players.value = props.room.players)
 </script>
