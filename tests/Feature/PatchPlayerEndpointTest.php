@@ -14,7 +14,7 @@ class PatchPlayerEndpointTest extends TestCase
 {
     use RefreshMongoDatabase;
 
-    const ENDPOINT = '/room/%s/player/%s';
+    const ENDPOINT = 'api/room/%s/player/%s';
 
     public function test_return_forbidden_if_player_id_does_not_match_cookie(): void
     {
@@ -22,17 +22,13 @@ class PatchPlayerEndpointTest extends TestCase
 
         $room->players()->create();
 
-        $this->patch(sprintf(self::ENDPOINT, $room->uuid, $room->players[0]->id), ['name' => 'John Smith'])
+        $this->patch(sprintf(self::ENDPOINT, $room->uuid, $room->players[0]->id))
             ->assertForbidden();
     }
 
     public static function validationCases(): array
     {
         return [
-            'empty payload' => [
-                'payload' => [],
-                'expectedErrors' => ['name'],
-            ],
             'empty name' => [
                 'payload' => ['name' => ''],
                 'expectedErrors' => ['name'],
@@ -40,6 +36,14 @@ class PatchPlayerEndpointTest extends TestCase
             'long name' => [
                 'payload' => ['name' => Str::repeat('a', 101)],
                 'expectedErrors' => ['name'],
+            ],
+            'non-numeric score' => [
+                'payload' => ['score' => 'ABC'],
+                'expectedErrors' => ['score'],
+            ],
+            'negative score' => [
+                'payload' => ['score' => -1],
+                'expectedErrors' => ['score'],
             ],
         ];
     }
@@ -63,22 +67,22 @@ class PatchPlayerEndpointTest extends TestCase
             ->assertInvalid($expectedErrors);
     }
 
-    public function test_player_can_update_their_name(): void
+    public function test_player_can_update_their_name_and_score(): void
     {
         Event::fake();
 
         $room = Room::factory()->create();
 
-        $player = $room->players()->create(['name' => 'Jon Smit']);
+        $player = $room->players()->create(['name' => 'Jon Smit', 'score' => 10]);
 
-        $payload = ['name' => 'John Smith'];
+        $payload = ['name' => 'John Smith', 'score' => 15];
 
         $this->withSession([
             'roomId' => $room->id,
             'playerId' => $player->id,
         ])
             ->patch(sprintf(self::ENDPOINT, $room->uuid, $player->id), $payload)
-            ->assertRedirectToRoute('room:view', ['room' => $room->uuid]);
+            ->assertNoContent();
 
         $room->refresh();
 
@@ -86,6 +90,7 @@ class PatchPlayerEndpointTest extends TestCase
 
         $this->assertEquals($player->id, $room->players[0]->id);
         $this->assertEquals($payload['name'], $room->players[0]->name);
+        $this->assertEquals($payload['score'], $room->players[0]->score);
 
         Event::assertDispatched(PlayerCreatedUpdated::class, 1);
     }

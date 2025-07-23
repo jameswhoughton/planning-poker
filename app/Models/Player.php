@@ -16,6 +16,6 @@ class Player extends Model
     ];
 
     protected $attributes = [
-        'score' => 0,
+        'score' => null,
     ];
 }

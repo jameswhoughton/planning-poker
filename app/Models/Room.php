@@ -19,6 +19,7 @@ class Room extends Model
 
     protected $attributes = [
         'players' => [],
+        'showScores' => false,
     ];
 
     protected $primaryKey = 'uuid';
