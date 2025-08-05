@@ -1,3 +1,4 @@
+import 'vue3-toastify/dist/index.css';
 import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -5,6 +6,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { configureEcho } from '@laravel/echo-vue';
+import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify';
 
 configureEcho({
     broadcaster: "reverb",
@@ -25,6 +27,17 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(
+                Vue3Toastify,
+                {
+                    autoClose: 3000,
+                    multiple: false,
+                    theme: 'dark',
+                    position: 'bottom-right',
+                    hideProgressBar: true,
+                    closeButton: false,
+                } as ToastContainerOptions,
+            )
             .mount(el);
     },
     progress: {

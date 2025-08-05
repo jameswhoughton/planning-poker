@@ -10,6 +10,7 @@ Route::get('/', RootController::class)->name('home');
 // Rooms
 Route::post('/', [RoomController::class, 'create'])->middleware(['throttle:roomCreate'])->name('room:create');
 Route::get('/room/{room}', [RoomController::class, 'view'])->name('room:view');
+Route::delete('/room/{room}', [RoomController::class, 'destroy'])->name('room:destroy');
 
 // Players
 Route::post('/room/{room}/player', [PlayerController::class, 'create'])->name('player:create');

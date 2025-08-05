@@ -17,16 +17,16 @@ class GetRoomEndpointTest extends TestCase
 
         $room->players()->create(['name' => 'John']);
 
-        $resp = $this->get('/room/' . $room->uuid);
+        $resp = $this->get('/room/'.$room->uuid);
 
         $resp->assertOk()
             ->assertInertia(
-                fn(Assert $page) => $page
+                fn (Assert $page) => $page
                     ->component('Room')
                     ->where('room.uuid', $room->uuid)
                     ->where('room.showScores', false)
                     ->has('playerId')
-                    ->where('room.players.0', [
+                    ->where('players.0', [
                         'id' => $room->players[0]->id,
                         'name' => 'John',
                         'score' => null,
@@ -48,11 +48,11 @@ class GetRoomEndpointTest extends TestCase
         $resp = $this->withSession([
             'roomId' => 'AAA',
             'playerId' => '111',
-        ])->get('/room/' . $room->uuid);
+        ])->get('/room/'.$room->uuid);
 
         $resp->assertOk();
 
-        $resp->assertSessionHas('playerId', fn($v) => $v === null);
+        $resp->assertSessionHas('playerId', fn ($v) => $v === null);
         $resp->assertSessionHas('roomId', $room->id);
     }
 }
