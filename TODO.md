@@ -7,7 +7,8 @@
 - [x] Add reset button.
     - [ ] Move toast to Echo action
 - [x] Add share button.
-- [ ] Add destroy room button.
+- [x] Add destroy room button.
+    - [ ] Notify players in the room.
 - [ ] Ability to rejoin previous room (based on cookie).
 - [ ] Add cleanup process for rooms.
 - [ ] Add toast notifications.

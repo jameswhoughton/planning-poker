@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RoomDeleted;
 use App\Events\RoomUpdated;
 use App\Http\Requests\PatchRoomRequest;
 use App\Models\Room;
@@ -93,6 +94,8 @@ class RoomController extends Controller
 
         $request->session()->forget('roomId');
         $request->session()->forget('playerId');
+
+        broadcast(new RoomDeleted($room));
 
         return to_route('home');
     }

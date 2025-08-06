@@ -17,6 +17,7 @@ import { router } from '@inertiajs/vue3';
 import axios from "axios";
 import ButtonShare from "@/components/ButtonShare.vue";
 import ButtonReset from "@/components/ButtonReset.vue";
+import ButtonDestroyRoom from "@/components/ButtonDestroyRoom.vue";
 
 type Room = {
     id: string,
@@ -84,8 +85,15 @@ useEchoPublic(
     }
 )
 
+useEchoPublic(
+    `room.${props.room.id}`,
+    'RoomDeleted',
+    () => roomDeleted.value = true
+)
+
 const roomData: Ref<Room | null> = ref<Room | null>(null)
 const playerData: Ref<Player[]> = ref<Player[]>([])
+const roomDeleted: Ref<boolean> = ref<boolean>(false)
 
 const cards: Card[] = [
     {
@@ -150,6 +158,7 @@ onMounted(() => {
                     <form @submit.prevent="router.delete(`/room/${room.uuid}/player/${playerId}`)">
                         <VButton type="submit">Leave</VButton>
                     </form>
+                    <ButtonDestroyRoom :room-uuid="room.uuid" />
                 </div>
             </div>
             <div class="flex flex-col items-center gap-6">

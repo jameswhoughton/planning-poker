@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Events\RoomDeleted;
 use App\Models\Room;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use Tests\Traits\RefreshMongoDatabase;
 
@@ -23,6 +25,8 @@ class DeleteRoomEndpointTest extends TestCase
 
     public function test_delete_room_endpoint_deletes_room_and_redirects(): void
     {
+        Event::fake();
+
         $room = Room::factory()->create()->refresh();
 
         $this->withSession([
@@ -31,5 +35,7 @@ class DeleteRoomEndpointTest extends TestCase
             ->delete(sprintf(self::ENDPOINT, $room->uuid))
             ->assertRedirectToRoute('home')
             ->assertSessionMissing('roomId');
+
+        Event::assertDispatched(RoomDeleted::class, 1);
     }
 }
