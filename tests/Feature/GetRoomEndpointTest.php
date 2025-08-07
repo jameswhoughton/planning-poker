@@ -25,6 +25,7 @@ class GetRoomEndpointTest extends TestCase
                     ->component('Room')
                     ->where('room.uuid', $room->uuid)
                     ->where('room.showScores', false)
+                    ->where('room.playerLimit', $room->playerLimit)
                     ->has('playerId')
                     ->where('players.0', [
                         'id' => $room->players[0]->id,

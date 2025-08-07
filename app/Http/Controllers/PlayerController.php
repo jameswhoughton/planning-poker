@@ -15,6 +15,10 @@ class PlayerController extends Controller
 {
     public function create(PostPlayerRequest $request, Room $room): RedirectResponse
     {
+        if ($room->players->count() >= $room->playerLimit) {
+            abort(403);
+        }
+
         $newPlayer = $room->players()->create(['name' => $request->validated('name')]);
 
         session(['playerId' => $newPlayer->id]);
@@ -74,6 +78,13 @@ class PlayerController extends Controller
         broadcast(new PlayerDeleted($room->id, $player));
 
         session(['playerId' => null]);
+
+        $room->refresh();
+
+        // If there are no players left in the room, delete it.
+        if ($room->players->count() === 0) {
+            $room->delete();
+        }
 
         return to_route('home');
     }

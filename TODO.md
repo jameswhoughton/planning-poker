@@ -1,26 +1,27 @@
 # TODO
 
 - [x] Add button to toggle scores.
-- [ ] Add frontend form to change name.
-- [ ] Add player limit (10?).
-    - [ ] Add 'player limit reached' message.
+- [x] Add frontend form to change name.
+- [x] Add player limit (10?).
+    - [x] Add 'player limit reached' message.
 - [x] Add reset button.
-    - [ ] Move toast to Echo action
+    - [x] Move toast to Echo action
 - [x] Add share button.
 - [x] Add destroy room button.
-    - [ ] Notify players in the room.
+    - [x] Notify players in the room (excluding person who closed the room).
 - [ ] Ability to rejoin previous room (based on cookie).
 - [ ] Add cleanup process for rooms.
-- [ ] Add toast notifications.
-    - [ ] Player has left the room.
-    - [ ] Player has joined.
+- [x] Add toast notifications.
+    - [x] Player has left the room.
+    - [x] Player has joined.
     - [x] Scores reset.
     - [x] Share link copied.
-- [ ] Add confirmation modal.
-    - [ ] When leaving room.
-    - [ ] When destroying room.
-    - [ ] When resetting a room.
+- [x] Add confirmation modal.
+    - [x] When leaving room.
+    - [x] When destroying room.
+    - [x] When resetting a room.
 - [ ] Update readme.
-- [ ] Home page styling
-- [ ] Button variants and styling
-
+- [ ] Home page styling.
+- [ ] Button variants and styling.
+- [x] Delete room when final player leaves.
+- [ ] 404 for rooms (remove room ID from cookie)

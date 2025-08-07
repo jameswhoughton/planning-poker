@@ -79,7 +79,7 @@ class RoomController extends Controller
 
         $room->refresh();
 
-        broadcast(new RoomUpdated($room));
+        broadcast(new RoomUpdated($room, 'scores have been reset'));
 
         return response()->noContent();
     }

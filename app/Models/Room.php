@@ -28,4 +28,9 @@ class Room extends Model
     {
         return $this->embedsMany(Player::class);
     }
+
+    public function getPlayerLimitAttribute(): int
+    {
+        return 10;
+    }
 }

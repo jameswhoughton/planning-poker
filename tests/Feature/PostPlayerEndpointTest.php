@@ -66,4 +66,18 @@ class PostPlayerEndpointTest extends TestCase
 
         Event::assertDispatched(PlayerCreatedUpdated::class, 1);
     }
+
+    public function test_unable_to_create_player_if_room_is_full(): void
+    {
+        Event::fake();
+
+        $room = Room::factory()->create();
+
+        for ($i = 0; $i <= $room->playerLimit; $i++) {
+            $room->players()->create();
+        }
+
+        $this->post(sprintf(self::ENDPOINT, $room->uuid), ['name' => 'aaa'])
+            ->assertForbidden();
+    }
 }

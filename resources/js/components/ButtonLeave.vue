@@ -6,21 +6,22 @@ import { ref, Ref } from 'vue';
 
 const props = defineProps<{
     roomUuid: string,
+    playerId: string,
 }>()
 
 const showConfirm: Ref<boolean> = ref<boolean>(false)
 
-function deleteRoom(): void {
-    router.delete(`/room/${props.roomUuid}`)
+function leave(): void {
+    router.delete(`/room/${props.roomUuid}/player/${props.playerId}`)
 }
 </script>
 
 <template>
-    <ModalConfirm v-model="showConfirm" @confirm="deleteRoom" @reject="showConfirm = false">
-        <template #title>Delete room</template>
+    <ModalConfirm v-model="showConfirm" @confirm="leave" @reject="showConfirm = false">
+        <template #title>Leave room</template>
         <template #default>
-            Are you sure you want to continue? This will affect all players currently in the room
+            Are you sure you want to leave?
         </template>
     </ModalConfirm>
-    <VButton @click="showConfirm = true" type="submit">Destroy Room</VButton>
+    <VButton @click="showConfirm = true" type="submit">Leave</VButton>
 </template>

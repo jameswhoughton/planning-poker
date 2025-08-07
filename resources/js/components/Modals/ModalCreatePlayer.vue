@@ -2,43 +2,39 @@
 import VButton from '@/components/VButton.vue';
 import VModal from '@/components/VModal.vue';
 import { InertiaForm, useForm } from '@inertiajs/vue3';
-import { ref, Ref } from 'vue';
+import VInput from '../VInput.vue';
 
 const props = defineProps<{
     roomUuid: string,
+    joinable: boolean,
 }>()
 
-const modal: Ref<HTMLDialogElement | null> = ref<HTMLDialogElement | null>(null)
-const playerForm: InertiaForm<{ name: string }> = useForm<{ name: string }>({ name: '' })
+const form: InertiaForm<{ name: string }> = useForm<{ name: string }>({ name: '' })
 
 function createPlayer() {
     const url = `/room/${props.roomUuid}/player`
 
-    playerForm.post(url)
+    form.post(url)
 }
 </script>
 
 <template>
-    <VModal ref="modal" :show="true">
+    <VModal :model-value="true" blur-background :dismissable="false">
         <template #title>
             Join Room
         </template>
         <template #default>
-            <form class="p-4 md:p-5" @submit.prevent="createPlayer">
-                <div class="grid gap-4 mb-4 grid-cols-2">
-                    <div class="col-span-2">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter
-                            your
-                            name</label>
-                        <input type="text" v-model="playerForm.name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            required>
-                    </div>
-                </div>
-                <VButton type="submit">
+            <form v-if="joinable" class="flex flex-col gap-3" @submit.prevent="createPlayer">
+                <VInput v-model="form.name" label="Enter your name" required name="name"
+                    :error="form.errors.name ?? ''" />
+                <VButton type="submit" full-width>
                     Join
                 </VButton>
             </form>
+            <div v-else>
+                <div class="mb-3">Unfortunately this room is at capacity</div>
+                <VButton is="a" href="/" full-width>Return home</VButton>
+            </div>
         </template>
     </VModal>
 </template>

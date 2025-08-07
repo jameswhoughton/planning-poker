@@ -15,7 +15,7 @@ class RoomUpdated implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public Room $room)
+    public function __construct(public Room $room, public string $message = '')
     {
         //
     }
@@ -35,6 +35,7 @@ class RoomUpdated implements ShouldBroadcast
         return [
             'room' => $this->room->toResource(),
             'players' => $this->room->players,
+            'message' => $this->message,
         ];
     }
 }
