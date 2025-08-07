@@ -19,8 +19,10 @@ defineProps<{
                             <slot name="title" />
                         </h3>
                     </div>
-                    <!-- Modal body -->
-                    <slot />
+                    <div class="p-3">
+                        <!-- Modal body -->
+                        <slot />
+                    </div>
                 </div>
             </div>
         </div>

@@ -18,6 +18,7 @@ import axios from "axios";
 import ButtonShare from "@/components/ButtonShare.vue";
 import ButtonReset from "@/components/ButtonReset.vue";
 import ButtonDestroyRoom from "@/components/ButtonDestroyRoom.vue";
+import ModalRoomDeleted from "@/components/Modals/ModalRoomDeleted.vue";
 
 type Room = {
     id: string,
@@ -147,6 +148,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <ModalRoomDeleted v-if="roomDeleted" />
     <template v-if="roomData !== null">
         <ModalCreatePlayer v-if="playerId === null" :room-uuid="room.uuid" />
         <div class="flex flex-col h-screen justify-between">

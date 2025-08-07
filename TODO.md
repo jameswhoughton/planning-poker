@@ -21,3 +21,6 @@
     - [ ] When destroying room.
     - [ ] When resetting a room.
 - [ ] Update readme.
+- [ ] Home page styling
+- [ ] Button variants and styling
+

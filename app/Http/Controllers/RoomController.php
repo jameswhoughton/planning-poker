@@ -90,12 +90,11 @@ class RoomController extends Controller
             abort(403);
         }
 
+        broadcast(new RoomDeleted($room));
         $room->delete();
 
         $request->session()->forget('roomId');
         $request->session()->forget('playerId');
-
-        broadcast(new RoomDeleted($room));
 
         return to_route('home');
     }
