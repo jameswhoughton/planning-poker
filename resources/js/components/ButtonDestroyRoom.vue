@@ -8,10 +8,16 @@ const props = defineProps<{
     roomUuid: string,
 }>()
 
+const emits = defineEmits<{
+    (e: 'click'): void
+}>()
+
 const showConfirm: Ref<boolean> = ref<boolean>(false)
 
 function deleteRoom(): void {
     router.delete(`/room/${props.roomUuid}`)
+
+    emits('click')
 }
 </script>
 
