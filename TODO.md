@@ -9,7 +9,7 @@
 - [x] Add share button.
 - [x] Add destroy room button.
     - [x] Notify players in the room (excluding person who closed the room).
-- [ ] Ability to rejoin previous room (based on cookie).
+- [X] Ability to rejoin previous room (based on cookie).
 - [ ] Add cleanup process for rooms.
 - [x] Add toast notifications.
     - [x] Player has left the room.
