@@ -1,6 +1,7 @@
 <template>
     <svg class="fill-stone-900 dark:fill-stone-100" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"
+        aria-label="Planning poker logo">
         <g>
             <path d="M304.872,377.116v-53.41c0.007,0,0.011,0.008,0.018,0.015v-3.762c0.808-0.41,1.683-0.812,2.492-1.147
 		c0.808-0.402,1.68-0.805,2.487-1.214c10.425-4.968,21.73-10.354,31.409-16.477c2.965-1.877,5.725-3.896,8.213-6.116

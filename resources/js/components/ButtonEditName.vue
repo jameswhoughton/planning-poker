@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
 import ModalEditName from './Modals/ModalEditName.vue';
-import VButton from './VButton.vue';
+import VMenuItem from './VMenuItem.vue';
 
 defineProps<{
     roomUuid: string,
@@ -12,6 +12,8 @@ const showModal: Ref<boolean> = ref<boolean>(false)
 </script>
 
 <template>
-    <VButton @click="showModal = true">Edit Name</VButton>
-    <ModalEditName :room-uuid="roomUuid" :player-id="playerId" v-model="showModal" />
+    <VMenuItem @click="showModal = true">Edit Name</VMenuItem>
+    <Teleport to="body">
+        <ModalEditName :room-uuid="roomUuid" :player-id="playerId" v-model="showModal" />
+    </Teleport>
 </template>

@@ -22,6 +22,7 @@ import ButtonEditName from "@/components/ButtonEditName.vue";
 import { toast } from "vue3-toastify";
 import ButtonLeave from "@/components/ButtonLeave.vue";
 import Logo from "@/components/logo.vue";
+import VMenu from "@/components/VMenu.vue";
 
 type Room = {
     id: string,
@@ -172,12 +173,15 @@ onMounted(() => {
                 class="border-b border-purple-600 py-6 px-4 flex items-center justify-between mb-6 bg-slate-200 dark:bg-slate-800">
                 <a href="/">
                     <Logo class="w-12" />
+                    <span class="sr-only">Home</span>
                 </a>
-                <div class="flex items-center gap-4">
+                <div class="flex gap-6">
                     <ButtonShare />
-                    <ButtonEditName v-if="playerId !== null" :room-uuid="room.uuid" :player-id="playerId" />
-                    <ButtonLeave v-if="playerId !== null" :room-uuid="room.uuid" :player-id="playerId" />
-                    <ButtonDestroyRoom :room-uuid="room.uuid" @click="roomDeletedChannel.leaveChannel" />
+                    <VMenu>
+                        <ButtonEditName v-if="playerId !== null" :room-uuid="room.uuid" :player-id="playerId" />
+                        <ButtonLeave v-if="playerId !== null" :room-uuid="room.uuid" :player-id="playerId" />
+                        <ButtonDestroyRoom :room-uuid="room.uuid" @click="roomDeletedChannel.leaveChannel" />
+                    </VMenu>
                 </div>
             </div>
             <div class="flex flex-col items-center gap-6">

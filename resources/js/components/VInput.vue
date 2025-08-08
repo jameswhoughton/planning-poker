@@ -19,7 +19,7 @@ const model = defineModel<string>()
             label }} <span v-if="required" class="text-red-500">*</span></label>
         <input type="text" v-model="model" :name="name"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            :required="required">
+            :required="required" :title="label">
         <div class="text-sm text-red-500" v-if="error !== ''">{{ error }}</div>
     </div>
 </template>

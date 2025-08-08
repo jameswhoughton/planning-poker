@@ -9,7 +9,7 @@ function share(): void {
 
     window.navigator.clipboard.write([clipboardItem])
 
-    toast('url copied to clipboard')
+    toast('URL copied to clipboard')
 }
 </script>
 

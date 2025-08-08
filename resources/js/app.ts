@@ -31,8 +31,6 @@ createInertiaApp({
                 Vue3Toastify,
                 {
                     autoClose: 3000,
-                    multiple: false,
-                    theme: 'dark',
                     position: 'bottom-right',
                     hideProgressBar: true,
                     closeButton: false,
