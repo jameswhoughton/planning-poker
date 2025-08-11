@@ -1,11 +1,21 @@
 <script lang="ts" setup>
-import { ref, Ref } from 'vue';
+import { onMounted, onUnmounted, ref, Ref } from 'vue';
 
 const showMenu: Ref<boolean> = ref<boolean>(false)
+const containerRef: Ref<HTMLElement | null> = ref<HTMLElement | null>(null)
+
+function handleClick(e: MouseEvent): void {
+    if (containerRef.value && e.target && containerRef.value.contains(e.target as Node)) return
+
+    showMenu.value = false
+}
+
+onMounted(() => document.addEventListener('click', handleClick))
+onUnmounted(() => document.removeEventListener('click', handleClick))
 </script>
 
 <template>
-    <div class="relative overflow-visible flex items-center">
+    <div class="relative overflow-visible flex items-center" ref="containerRef">
         <button
             class="cursor-pointer focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded"
             @click="showMenu = !showMenu">
@@ -17,7 +27,8 @@ const showMenu: Ref<boolean> = ref<boolean>(false)
             </svg>
             <span class="sr-only">Menu</span>
         </button>
-        <div class="absolute right-0 w-48 top-[65px] shadow-sm" v-show="showMenu" @keyup.esc="showMenu = false">
+        <div class="absolute right-0 w-48 top-[65px] shadow-sm" v-show="showMenu" @keyup.esc="showMenu = false"
+            @click="showMenu = false">
             <ul>
                 <slot />
             </ul>

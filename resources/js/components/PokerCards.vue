@@ -25,8 +25,8 @@ function setScore(score: number | null) {
             class="w-24 h-36 border-4 border-slate-500 dark:border-slate-600 text-3xl hover:cursor-pointer rounded-lg"
             @click="setScore(null)">Clear</button>
         <button
-            class="w-24 h-36 border-4 border-slate-500 dark:border-slate-600 text-3xl hover:cursor-pointer rounded-lg"
-            :class="{ '!border-purple-600': card.value === player.score }" v-for="(card, i) in cards" :key="i"
+            class="w-24 h-36 border-4 border-slate-200 dark:border-slate-700 text-3xl hover:cursor-pointer rounded-lg"
+            :class="{ '!border-blue-600': card.value === player.score }" v-for="(card, i) in cards" :key="i"
             @click="setScore(card.value)">{{
                 card.label }}</button>
     </div>

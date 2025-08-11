@@ -21,7 +21,8 @@
     - [x] When destroying room.
     - [x] When resetting a room.
 - [ ] Update readme.
-- [ ] Home page styling.
-- [ ] Button variants and styling.
+- [x] Home page styling.
+- [x] Button variants and styling.
 - [x] Delete room when final player leaves.
 - [ ] 404 for rooms (remove room ID from cookie)
+- [ ] Add results stats panel

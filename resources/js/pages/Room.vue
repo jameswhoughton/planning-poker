@@ -168,9 +168,9 @@ onMounted(() => {
     <template v-if="roomData !== null">
         <ModalCreatePlayer v-if="playerId === null" :room-uuid="room.uuid"
             :joinable="playerData.length < room.playerLimit" />
-        <div class="flex flex-col h-screen justify-between">
+        <div class="min-h-screen flex flex-col">
             <div
-                class="border-b border-purple-600 py-6 px-4 flex items-center justify-between mb-6 bg-slate-200 dark:bg-slate-800">
+                class="border-b-2 border-blue-600 py-6 px-4 flex items-center justify-between mb-6 bg-slate-200 dark:bg-slate-800">
                 <a href="/">
                     <Logo class="w-12" />
                     <span class="sr-only">Home</span>
@@ -184,20 +184,23 @@ onMounted(() => {
                     </VMenu>
                 </div>
             </div>
-            <div class="flex flex-col items-center gap-6">
-                <div class="flex gap-6 justify-center flex-wrap mb-6 px-3">
-                    <PlayerCard v-for="(player, i) in playerData" :key="i" :player="player"
-                        :show-score="roomData.showScores || player.id === playerId"
-                        :class="{ 'border-purple-600': player.id === playerId }" />
-                </div>
-                <div class="flex gap-3">
-                    <VButton type="button" @click="toggleScores">{{ roomData.showScores ? 'Hide' : 'Show' }} Scores
+            <div class="flex flex-col justify-between grow px-4">
+                <div class="flex gap-3 justify-end mb-6">
+                    <VButton type="button" variant="secondary" @click="toggleScores">{{ roomData.showScores ? 'Hide' :
+                        'Show' }} Scores
                     </VButton>
                     <ButtonReset :room-uuid="room.uuid" />
                 </div>
+                <div class="flex flex-col items-center gap-6">
+                    <div class="flex gap-6 justify-center flex-wrap px-3">
+                        <PlayerCard v-for="(player, i) in playerData" :key="i" :player="player"
+                            :show-score="roomData.showScores || player.id === playerId"
+                            :class="{ 'border-blue-600': player.id === playerId }" />
+                    </div>
+                </div>
+                <PokerCards class="mt-6 flex justify-center mb-6 px-3" v-if="me !== undefined" :cards="cards"
+                    :player="me" :room-id="room.uuid" />
             </div>
-            <PokerCards class="mt-3 flex justify-center mb-6 px-3" v-if="me !== undefined" :cards="cards" :player="me"
-                :room-id="room.uuid" />
         </div>
     </template>
 </template>

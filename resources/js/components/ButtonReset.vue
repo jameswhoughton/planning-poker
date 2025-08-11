@@ -22,5 +22,5 @@ function reset(): void {
         <template #title>Reset scores</template>
         <div>Are you sure you want to reset the scores for all players?</div>
     </ModalConfirm>
-    <VButton type="button" @click="showConfirm = true">Reset Scores</VButton>
+    <VButton type="button" variant="secondary" @click="showConfirm = true">Reset Scores</VButton>
 </template>
