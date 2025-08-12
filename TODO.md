@@ -26,3 +26,5 @@
 - [x] Delete room when final player leaves.
 - [ ] 404 for rooms (remove room ID from cookie)
 - [ ] Add results stats panel
+- [ ] Deal with orphaned players
+

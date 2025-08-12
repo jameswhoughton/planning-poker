@@ -22,7 +22,7 @@ function setScore(score: number | null) {
 <template>
     <div class="flex gap-4 flex-wrap">
         <button
-            class="w-24 h-36 border-4 border-slate-500 dark:border-slate-600 text-3xl hover:cursor-pointer rounded-lg"
+            class="w-24 h-36 border-4 border-slate-200 dark:border-slate-700 text-3xl hover:cursor-pointer rounded-lg"
             @click="setScore(null)">Clear</button>
         <button
             class="w-24 h-36 border-4 border-slate-200 dark:border-slate-700 text-3xl hover:cursor-pointer rounded-lg"

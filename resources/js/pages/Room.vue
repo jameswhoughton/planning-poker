@@ -195,11 +195,14 @@ onMounted(() => {
                     <div class="flex gap-6 justify-center flex-wrap px-3">
                         <PlayerCard v-for="(player, i) in playerData" :key="i" :player="player"
                             :show-score="roomData.showScores || player.id === playerId"
-                            :class="{ 'border-blue-600': player.id === playerId }" />
+                            class="border-slate-200 dark:border-slate-700"
+                            :class="{ '!border-blue-600': player.id === playerId }" />
                     </div>
                 </div>
-                <PokerCards class="mt-6 flex justify-center mb-6 px-3" v-if="me !== undefined" :cards="cards"
-                    :player="me" :room-id="room.uuid" />
+                <div class="mt-6 border-t-2 border-blue-600 py-6 px-4 bg-slate-200 dark:bg-slate-800">
+                    <PokerCards class="flex justify-center px-3" v-if="me !== undefined" :cards="cards" :player="me"
+                        :room-id="room.uuid" />
+                </div>
             </div>
         </div>
     </template>
