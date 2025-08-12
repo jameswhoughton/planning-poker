@@ -44,6 +44,24 @@ services:
                 - '--eval=db.runCommand({ping:1})'
             retries: 3
             timeout: 5s
+    mongodb.test:
+        image: 'mongo:latest'
+        environment:
+            - 'MONGODB_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}'
+            - 'MONGODB_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}'
+            - 'MONGODB_INITDB_DATABASE=${MONGODB_DATABASE}'
+        ports:
+            - '${FORWARD_MONGODB_PORT:-27018}:27017'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - mongosh
+                - 'mongodb://localhost:27017/admin'
+                - '--eval=db.runCommand({ping:1})'
+            retries: 3
+            timeout: 5s
 networks:
     sail:
         driver: bridge
