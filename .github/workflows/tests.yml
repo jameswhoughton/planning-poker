@@ -14,7 +14,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     services:
-      mongodb:
+      mongodb.test:
         image: 'mongo:latest'
         env:
           MONGODB_INITDB_ROOT_USERNAME:
