@@ -3,6 +3,7 @@ export type Player = {
     id: string,
     name: string,
     score: number | null
+    updated_at: Date
 }
 </script>
 

@@ -27,11 +27,11 @@ class GetRoomEndpointTest extends TestCase
                     ->where('room.showScores', false)
                     ->where('room.playerLimit', $room->playerLimit)
                     ->has('playerId')
-                    ->where('players.0', [
-                        'id' => $room->players[0]->id,
-                        'name' => 'John',
-                        'score' => null,
-                    ])
+                    ->has('players.0.created_at')
+                    ->has('players.0.updated_at')
+                    ->where('players.0.id', $room->players[0]->id)
+                    ->where('players.0.name', 'John')
+                    ->where('players.0.score', null)
             );
     }
 
