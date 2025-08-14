@@ -11,10 +11,8 @@ export type Player = {
 import { useEchoPublic } from "@laravel/echo-vue";
 import { Ref, ref, onMounted, ComputedRef, computed } from "vue";
 import ModalCreatePlayer from "@/components/Modals/ModalCreatePlayer.vue";
-import VButton from "@/components/VButton.vue";
 import PokerCards, { type Card } from "@/components/PokerCards.vue";
 import PlayerCard from "@/components/PlayerCard.vue";
-import axios from "axios";
 import ButtonShare from "@/components/ButtonShare.vue";
 import ButtonReset from "@/components/ButtonReset.vue";
 import ButtonDestroyRoom from "@/components/ButtonDestroyRoom.vue";
@@ -24,6 +22,9 @@ import { toast } from "vue3-toastify";
 import ButtonLeave from "@/components/ButtonLeave.vue";
 import Logo from "@/components/logo.vue";
 import VMenu from "@/components/VMenu.vue";
+import ButtonScores from "@/components/ButtonScores.vue";
+import ModalScores from "@/components/Modals/ModalScores.vue";
+import VButton from "@/components/VButton.vue";
 
 type Room = {
     id: string,
@@ -112,6 +113,7 @@ const roomDeletedChannel = useEchoPublic(
 const roomData: Ref<Room | null> = ref<Room | null>(null)
 const playerData: Ref<Player[]> = ref<Player[]>([])
 const roomDeleted: Ref<boolean> = ref<boolean>(false)
+const showResultsModal: Ref<boolean> = ref<boolean>(false)
 
 const cards: Card[] = [
     {
@@ -152,12 +154,6 @@ const cards: Card[] = [
     },
 ]
 
-function toggleScores(): void {
-    axios.patch(`/api/room/${props.room.uuid}`, {
-        showScores: !roomData.value?.showScores,
-    })
-}
-
 onMounted(() => {
     roomData.value = props.room
     playerData.value = props.players
@@ -186,11 +182,13 @@ onMounted(() => {
                 </div>
             </div>
             <div class="flex flex-col justify-between grow px-4">
-                <div class="flex gap-3 justify-end mb-6">
-                    <VButton type="button" variant="secondary" @click="toggleScores">{{ roomData.showScores ? 'Hide' :
-                        'Show' }} Scores
+                <div class="flex gap-3 justify-end mb-6 flex-wrap">
+                    <ButtonScores :room-uuid="room.uuid" :show-scores="roomData.showScores"
+                        @show="showResultsModal = true" />
+                    <VButton v-show="roomData.showScores" variant="secondary" @click="showResultsModal = true">Results
                     </VButton>
                     <ButtonReset :room-uuid="room.uuid" />
+                    <ModalScores v-model="showResultsModal" :players="playerData" />
                 </div>
                 <div class="flex flex-col items-center gap-6">
                     <div class="flex gap-6 justify-center flex-wrap px-3">

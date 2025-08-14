@@ -6,7 +6,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime)
 
 const props = defineProps<{
-    lastActive: Date,
+    lastActive: string,
 }>()
 
 const currentTime: Ref<Date> = ref<Date>(new Date)
