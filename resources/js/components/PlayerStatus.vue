@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import { computed, ComputedRef, ref, Ref } from 'vue';
+import { computed, ComputedRef } from 'vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import usePlayerState from '@/composables/playerState';
+import { Player } from '@/pages/Room.vue';
 
 dayjs.extend(relativeTime)
 
 const props = defineProps<{
-    lastActive: string,
+    player: Player,
 }>()
 
-const currentTime: Ref<Date> = ref<Date>(new Date)
+const { playerIsActive } = usePlayerState()
 
-const isActive: ComputedRef<boolean> = computed<boolean>(() => dayjs(currentTime.value).diff(dayjs(props.lastActive), 'minute') < 5)
+const isActive: ComputedRef<boolean> = computed<boolean>(() => playerIsActive(props.player))
 
-const inActiveMessage: ComputedRef<string> = computed<string>(() => `last active ${dayjs(props.lastActive).fromNow()}`)
-
-// Update the current time every 10 seconds
-setInterval(() => currentTime.value = new Date, 10000)
+const inActiveMessage: ComputedRef<string> = computed<string>(() => `last active ${dayjs(props.player.updated_at).fromNow()}`)
 </script>
 
 <template>

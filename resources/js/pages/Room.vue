@@ -3,7 +3,7 @@ export type Player = {
     id: string,
     name: string,
     score: number | null
-    updated_at: Date
+    updated_at: string
 }
 </script>
 
@@ -25,6 +25,7 @@ import VMenu from "@/components/VMenu.vue";
 import ButtonScores from "@/components/ButtonScores.vue";
 import ModalScores from "@/components/Modals/ModalScores.vue";
 import VButton from "@/components/VButton.vue";
+import usePlayerState from "@/composables/playerState";
 
 type Room = {
     id: string,
@@ -40,7 +41,7 @@ const props = defineProps<{
     playerId: string | null,
 }>()
 
-const me: ComputedRef<Player | undefined> = computed<Player | undefined>(() => playerData.value.find((p: Player) => p.id === props.playerId))
+const me: ComputedRef<Player | undefined> = computed<Player | undefined>(() => playersLocal.value.find((p: Player) => p.id === props.playerId))
 
 
 type EventPlayerCreatedUpdated = {
@@ -59,10 +60,10 @@ useEchoPublic(
     `room.${props.room.id}`,
     'PlayerCreatedUpdated',
     (e: EventPlayerCreatedUpdated) => {
-        const index = playerData.value.findIndex((p: Player) => p.id === e.player.id)
+        const index = playersLocal.value.findIndex((p: Player) => p.id === e.player.id)
 
         if (index === -1) {
-            playerData.value.push(e.player)
+            playersLocal.value.push(e.player)
 
             if (props.playerId && e.player.id !== props.playerId) {
                 toast(`${e.player.name} has joined the room`)
@@ -71,7 +72,7 @@ useEchoPublic(
             return
         }
 
-        playerData.value[index] = e.player
+        playersLocal.value[index] = e.player
     }
 )
 
@@ -79,11 +80,11 @@ useEchoPublic(
     `room.${props.room.id}`,
     'PlayerDeleted',
     (e: EventPlayerDeleted) => {
-        const index = playerData.value.findIndex((p: Player) => p.id === e.player.id)
+        const index = playersLocal.value.findIndex((p: Player) => p.id === e.player.id)
 
         if (index === -1) return
 
-        const deleted = playerData.value.splice(index, 1)
+        const deleted = playersLocal.value.splice(index, 1)
 
         if (props.playerId && deleted[0].id !== props.playerId) {
             toast(`${deleted[0].name} has left`)
@@ -95,8 +96,8 @@ useEchoPublic(
     `room.${props.room.id}`,
     'RoomUpdated',
     (e: EventRoomUpdated) => {
-        roomData.value = e.room
-        playerData.value = e.players
+        roomLocal.value = e.room
+        playersLocal.value = e.players
 
         if (e.message !== '') {
             toast(e.message)
@@ -110,10 +111,11 @@ const roomDeletedChannel = useEchoPublic(
     () => roomDeleted.value = true
 )
 
-const roomData: Ref<Room | null> = ref<Room | null>(null)
-const playerData: Ref<Player[]> = ref<Player[]>([])
+const roomLocal: Ref<Room | null> = ref<Room | null>(null)
+const playersLocal: Ref<Player[]> = ref<Player[]>([])
 const roomDeleted: Ref<boolean> = ref<boolean>(false)
 const showResultsModal: Ref<boolean> = ref<boolean>(false)
+const hideInactive: Ref<boolean> = ref<boolean>(false)
 
 const cards: Card[] = [
     {
@@ -154,17 +156,25 @@ const cards: Card[] = [
     },
 ]
 
+const { playerIsActive } = usePlayerState()
+
+const filteredPlayers: ComputedRef<Player[]> = computed<Player[]>(() => {
+    if (!hideInactive.value) return playersLocal.value
+
+    return playersLocal.value.filter((p: Player) => playerIsActive(p))
+})
+
 onMounted(() => {
-    roomData.value = props.room
-    playerData.value = props.players
+    roomLocal.value = props.room
+    playersLocal.value = props.players
 })
 </script>
 
 <template>
     <ModalRoomDeleted v-if="roomDeleted" />
-    <template v-if="roomData !== null">
+    <template v-if="roomLocal !== null">
         <ModalCreatePlayer v-if="playerId === null" :room-uuid="room.uuid"
-            :joinable="playerData.length < room.playerLimit" />
+            :joinable="playersLocal.length < room.playerLimit" />
         <div class="min-h-screen flex flex-col">
             <div
                 class="border-b-2 border-blue-600 py-6 px-4 flex items-center justify-between mb-6 bg-slate-200 dark:bg-slate-800">
@@ -183,17 +193,21 @@ onMounted(() => {
             </div>
             <div class="flex flex-col justify-between grow px-4">
                 <div class="flex gap-3 justify-end mb-6 flex-wrap">
-                    <ButtonScores :room-uuid="room.uuid" :show-scores="roomData.showScores"
-                        @show="showResultsModal = true" />
-                    <VButton v-show="roomData.showScores" variant="secondary" @click="showResultsModal = true">Results
+                    <ButtonScores :room-uuid="room.uuid" :show-scores="roomLocal.showScores" />
+                    <VButton v-show="roomLocal.showScores" variant="secondary" @click="showResultsModal = true">Results
                     </VButton>
                     <ButtonReset :room-uuid="room.uuid" />
-                    <ModalScores v-model="showResultsModal" :players="playerData" />
+                    <VButton @click="hideInactive = !hideInactive" variant="secondary">{{ hideInactive ? 'Show' : 'Hide'
+                        }} Inactive</VButton>
+                    <ModalScores v-model="showResultsModal" :players="filteredPlayers" />
                 </div>
                 <div class="flex flex-col items-center gap-6">
-                    <div class="flex gap-6 justify-center flex-wrap px-3">
-                        <PlayerCard v-for="(player, i) in playerData" :key="i" :player="player"
-                            :show-score="roomData.showScores || player.id === playerId"
+                    <div v-if="filteredPlayers.length === 0" class="flex justify-center items-center">
+                        <h2 class="text-3xl">No active players</h2>
+                    </div>
+                    <div v-else class="flex gap-6 justify-center flex-wrap px-3">
+                        <PlayerCard v-for="(player, i) in filteredPlayers" :key="i" :player="player"
+                            :show-score="roomLocal.showScores || player.id === playerId"
                             class="border-slate-200 dark:border-slate-700"
                             :class="{ '!border-blue-600': player.id === playerId }" />
                     </div>
