@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+
 withDefaults(defineProps<{
     blurBackground?: boolean,
     dismissable?: boolean,
@@ -12,7 +15,7 @@ const show = defineModel()
 
 <template>
     <div v-show="show">
-        <div :class="{ 'backdrop-blur-sm': blurBackground }" class=" flex overflow-y-auto overflow-x-hidden z-50 fixed justify-center items-center w-full md:inset-0
+        <div :class="{ 'backdrop-blur-sm': blurBackground }" class=" flex overflow-y-auto overflow-x-hidden z-50 fixed justify-center items-center w-full inset-0
         h-full max-h-full backdrop-blur-sm">
 
             <div class="relative p-4 w-full max-w-md max-h-full">
@@ -24,7 +27,10 @@ const show = defineModel()
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                             <slot name="title" />
                         </h3>
-                        <button v-if="dismissable" @click="show = false">&times;</button>
+                        <button class="cursor-pointer" v-if="dismissable" @click="show = false">
+                            <FontAwesomeIcon :icon="faXmark" />
+                            <span class="sr-only">Close</span>
+                        </button>
                     </div>
                     <div class="p-4 md:p-5">
                         <!-- Modal body -->

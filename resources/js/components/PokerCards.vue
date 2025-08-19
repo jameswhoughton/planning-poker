@@ -20,12 +20,12 @@ function setScore(score: number | null) {
 </script>
 
 <template>
-    <div class="flex gap-4 flex-wrap">
+    <div class="flex gap-4 flex-wrap text-xl md:text-3xl">
         <button
-            class="w-24 h-36 border-4 border-slate-200 dark:border-slate-700 text-3xl hover:cursor-pointer rounded-lg"
+            class="w-16 md:w-24 h-28 md:h-36 border-4 border-slate-400 dark:border-slate-700 hover:cursor-pointer rounded-lg"
             @click="setScore(null)">Clear</button>
         <button
-            class="w-24 h-36 border-4 border-slate-200 dark:border-slate-700 text-3xl hover:cursor-pointer rounded-lg"
+            class="w-16 md:w-24 h-28 md:h-36 border-4 border-slate-400 dark:border-slate-700 hover:cursor-pointer rounded-lg"
             :class="{ '!border-blue-600': card.value === player.score }" v-for="(card, i) in cards" :key="i"
             @click="setScore(card.value)">{{
                 card.label }}</button>

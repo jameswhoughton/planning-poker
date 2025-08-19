@@ -22,7 +22,7 @@ const variantClasses: ComputedRef<string> = computed<string>(() => {
     const classes: Record<Variant, string> = {
         primary: 'text-white bg-blue-600 hover:bg-blue-700',
         secondary: 'dark:text-white bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600',
-        destructive: '',
+        destructive: 'text-white bg-red-600 hover:bg-red-700',
     }
 
     return classes[props.variant]

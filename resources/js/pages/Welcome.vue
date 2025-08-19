@@ -24,7 +24,7 @@ defineProps<{
             <div class="mb-6 text-lg">
                 <h2 class="text-3xl mb-6">Welcome!</h2>
                 <p class="mb-3">Streamline your sprint planning and make estimation quick, fair, and fun.</p>
-                <ul class="pl-5 list-disc mb-3">
+                <ul class="list-inside list-disc mb-3">
                     <li>No accounts required.</li>
                     <li>Supports up to 10 players per room.</li>
                 </ul>

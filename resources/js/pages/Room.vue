@@ -26,6 +26,9 @@ import ButtonScores from "@/components/ButtonScores.vue";
 import ModalScores from "@/components/Modals/ModalScores.vue";
 import VButton from "@/components/VButton.vue";
 import usePlayerState from "@/composables/playerState";
+import ButtonHelp from "@/components/ButtonHelp.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 type Room = {
     id: string,
@@ -164,6 +167,10 @@ const filteredPlayers: ComputedRef<Player[]> = computed<Player[]>(() => {
     return playersLocal.value.filter((p: Player) => playerIsActive(p))
 })
 
+const otherPlayers: ComputedRef<Player[]> = computed<Player[]>(
+    () => playersLocal.value.filter((p: Player) => p.id !== me.value?.id)
+)
+
 onMounted(() => {
     roomLocal.value = props.room
     playersLocal.value = props.players
@@ -182,7 +189,11 @@ onMounted(() => {
                     <Logo class="w-12" />
                     <span class="sr-only">Home</span>
                 </a>
-                <div class="flex gap-6">
+                <div class="flex gap-6 items-center">
+                    <a href="https://github.com/jameswhoughton/planning-poker/" target="_blank">
+                        <FontAwesomeIcon :icon="faGithub" size="2xl" />
+                        <span class="sr-only">Project repository</span>
+                    </a>
                     <ButtonShare />
                     <VMenu>
                         <ButtonEditName v-if="playerId !== null" :room-uuid="room.uuid" :player-id="playerId" />
@@ -191,25 +202,27 @@ onMounted(() => {
                     </VMenu>
                 </div>
             </div>
-            <div class="flex flex-col justify-between grow px-4">
-                <div class="flex gap-3 justify-end mb-6 flex-wrap">
+            <div class="flex flex-col justify-between grow">
+                <div class="flex gap-3 justify-end mb-6 flex-wrap px-4">
                     <ButtonScores :room-uuid="room.uuid" :show-scores="roomLocal.showScores" />
                     <VButton v-show="roomLocal.showScores" variant="secondary" @click="showResultsModal = true">Results
                     </VButton>
                     <ButtonReset :room-uuid="room.uuid" />
                     <VButton @click="hideInactive = !hideInactive" variant="secondary">{{ hideInactive ? 'Show' : 'Hide'
                         }} Inactive</VButton>
+                    <ButtonHelp />
                     <ModalScores v-model="showResultsModal" :players="filteredPlayers" />
                 </div>
-                <div class="flex flex-col items-center gap-6">
+                <div class="flex flex-col items-center gap-6 px-4">
                     <div v-if="filteredPlayers.length === 0" class="flex justify-center items-center">
                         <h2 class="text-3xl">No active players</h2>
                     </div>
-                    <div v-else class="flex gap-6 justify-center flex-wrap px-3">
-                        <PlayerCard v-for="(player, i) in filteredPlayers" :key="i" :player="player"
-                            :show-score="roomLocal.showScores || player.id === playerId"
-                            class="border-slate-200 dark:border-slate-700"
-                            :class="{ '!border-blue-600': player.id === playerId }" />
+                    <div v-else class="flex gap-6 justify-center px-3 overflow-x-scroll max-w-full">
+                        <PlayerCard v-for="(player, i) in otherPlayers" :key="i" :player="player"
+                            :show-score="roomLocal.showScores" class="border-slate-400 dark:border-slate-700" />
+                    </div>
+                    <div v-if="me !== undefined" class="flex justify-center px-3">
+                        <PlayerCard :player="me" :show-score="true" class="border-blue-600" />
                     </div>
                 </div>
                 <div class="mt-6 border-t-2 border-blue-600 py-6 px-4 bg-slate-200 dark:bg-slate-800">

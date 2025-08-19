@@ -10,7 +10,7 @@
 - [x] Add destroy room button.
     - [x] Notify players in the room (excluding person who closed the room).
 - [X] Ability to rejoin previous room (based on cookie).
-- [ ] Add cleanup process for rooms.
+- [x] Add cleanup process for rooms.
 - [x] Add toast notifications.
     - [x] Player has left the room.
     - [x] Player has joined.
@@ -24,7 +24,9 @@
 - [x] Home page styling.
 - [x] Button variants and styling.
 - [x] Delete room when final player leaves.
-- [ ] 404 for rooms (remove room ID from cookie)
+- [x] 404 for rooms (remove room ID from cookie)
 - [x] Add results stats panel
 - [ ] Deal with orphaned players
-
+- [x] Add Help modal
+- [ ] Add Cookie policy page
+- [x] Add github link

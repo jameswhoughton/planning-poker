@@ -23,7 +23,7 @@ function deleteRoom(): void {
 
 <template>
     <Teleport to="body">
-        <ModalConfirm v-model="showConfirm" @confirm="deleteRoom" @reject="showConfirm = false">
+        <ModalConfirm variant="destructive" v-model="showConfirm" @confirm="deleteRoom" @reject="showConfirm = false">
             <template #title>Delete room</template>
             <template #default>
                 Are you sure you want to continue? This will affect all players currently in the room
