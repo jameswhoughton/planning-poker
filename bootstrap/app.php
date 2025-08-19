@@ -39,6 +39,6 @@ return Application::configure(basePath: dirname(__DIR__))
             $request->session()->forget('roomId');
             $request->session()->forget('playerId');
 
-            return Inertia::render('NotFound', []);
+            return Inertia::render('NotFound', [])->toResponse($request)->setStatusCode($e->getStatusCode());
         });
     })->create();
