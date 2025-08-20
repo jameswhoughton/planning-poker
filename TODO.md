@@ -30,3 +30,4 @@
 - [x] Add Help modal
 - [ ] Add Cookie policy page
 - [x] Add github link
+- [ ] Add CSRF token
