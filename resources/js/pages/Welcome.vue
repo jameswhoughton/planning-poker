@@ -14,13 +14,13 @@ defineProps<{
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
-    <div class="flex flex-col gap-12 md:flex-row h-screen">
+    <div class="flex flex-col md:flex-row h-screen">
         <div
-            class="h-[60vh] md:h-full w-full md:w-[60%] flex items-center justify-center flex-col gap-12 flex-shrink-0 from-slate-400 to-slate-200 dark:from-slate-900 bg-slate-200 dark:bg-slate-700 border-b-2 border-blue-600 md:border-b-0 md:border-r-2">
+            class="h-[50vh] md:h-full w-full md:w-[60%] flex items-center justify-center flex-col gap-12 flex-shrink-0 from-slate-400 to-slate-200 dark:from-slate-900 bg-slate-100 dark:bg-slate-700 border-b-2 border-blue-600 md:border-b-0 md:border-r-2">
             <Logo class="w-48" />
             <h1 class="text-4xl">Planning Poker</h1>
         </div>
-        <div class="w-full flex flex-col justify-center gap-4">
+        <div class="w-full flex flex-col justify-center gap-4 p-12 h-[50vh] md:h-auto">
             <div class="mb-6 text-lg">
                 <h2 class="text-3xl mb-6">Welcome!</h2>
                 <p class="mb-3">Streamline your sprint planning and make estimation quick, fair, and fun.</p>

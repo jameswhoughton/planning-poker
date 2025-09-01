@@ -20,7 +20,7 @@ const show = defineModel()
 
             <div class="relative p-4 w-full max-w-md max-h-full">
                 <!-- Modal content -->
-                <div class="relative rounded-lg shadow-sm bg-slate-200 dark:bg-slate-800">
+                <div class="relative rounded-lg shadow-sm bg-slate-100 dark:bg-slate-800">
                     <!-- Modal header -->
                     <div
                         class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-slate-300">

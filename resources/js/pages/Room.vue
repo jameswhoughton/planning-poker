@@ -184,7 +184,7 @@ onMounted(() => {
             :joinable="playersLocal.length < room.playerLimit" />
         <div class="min-h-screen flex flex-col">
             <div
-                class="border-b-2 border-blue-600 py-6 px-4 flex items-center justify-between mb-6 bg-slate-200 dark:bg-slate-800">
+                class="border-b-2 border-blue-600 py-6 px-4 flex items-center justify-between mb-6 bg-slate-100 dark:bg-slate-800">
                 <a href="/">
                     <Logo class="w-12" />
                     <span class="sr-only">Home</span>
@@ -225,7 +225,7 @@ onMounted(() => {
                         <PlayerCard :player="me" :show-score="true" class="border-blue-600" />
                     </div>
                 </div>
-                <div class="mt-6 border-t-2 border-blue-600 py-6 px-4 bg-slate-200 dark:bg-slate-800">
+                <div class="mt-6 border-t-2 border-blue-600 py-6 px-4 bg-slate-100 dark:bg-slate-800">
                     <PokerCards class="flex justify-center px-3" v-if="me !== undefined" :cards="cards" :player="me"
                         :room-id="room.uuid" />
                 </div>

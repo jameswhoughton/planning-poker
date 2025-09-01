@@ -31,7 +31,7 @@ const variantClasses: ComputedRef<string> = computed<string>(() => {
 </script>
 
 <template>
-    <component :is="is" :type="type" :href="href" :class="[variantClasses, fullWidth ? 'w-full' : '']"
+    <component :is="is" :type="type" :href="href" :class="[variantClasses, fullWidth ? 'block w-full' : '']"
         class="focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-sm text-sm px-4 py-2 text-center transition-colors hover:cursor-pointer">
         <slot />
     </component>

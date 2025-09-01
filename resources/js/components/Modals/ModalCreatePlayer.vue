@@ -21,7 +21,7 @@ function createPlayer() {
 <template>
     <VModal :model-value="true" blur-background :dismissable="false">
         <template #title>
-            Join Room
+            Join room
         </template>
         <template #default>
             <form v-if="joinable" class="flex flex-col gap-3" @submit.prevent="createPlayer">
