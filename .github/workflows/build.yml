@@ -40,6 +40,7 @@ jobs:
         with:
           context: .
           push: true
+          platform: ${{ env.BUILD_PLATFORM }}
           build-args: |
             VITE_REVERB_APP_KEY=${{ env.VITE_REVERB_APP_KEY }}
             VITE_REVERB_HOST=${{ env.VITE_REVERB_HOST }}
