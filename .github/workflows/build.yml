@@ -41,6 +41,7 @@ jobs:
           context: .
           push: true
           platforms: ${{ vars.BUILD_PLATFORM }}
+          outputs: type=registry
           build-args: |
             VITE_REVERB_APP_KEY=${{ vars.VITE_REVERB_APP_KEY }}
             VITE_REVERB_HOST=${{ vars.VITE_REVERB_HOST }}
