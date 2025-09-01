@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Logo from '@/components/logo.vue';
 import VButton from '@/components/VButton.vue';
-import { Head, router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 
 defineProps<{
     lastRoomUuid: string,
@@ -10,17 +10,13 @@ defineProps<{
 
 <template>
 
-    <Head title="Welcome">
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    </Head>
-    <div class="flex flex-col md:flex-row h-screen">
+    <div class="flex flex-col md:flex-row min-h-screen">
         <div
-            class="h-[50vh] md:h-full w-full md:w-[60%] flex items-center justify-center flex-col gap-12 flex-shrink-0 from-slate-400 to-slate-200 dark:from-slate-900 bg-slate-100 dark:bg-slate-700 border-b-2 border-blue-600 md:border-b-0 md:border-r-2">
-            <Logo class="w-48" />
+            class="h-[300px] md:h-screen w-full md:w-[60%] flex items-center justify-center flex-col gap-12 flex-shrink-0 from-slate-400 to-slate-200 dark:from-slate-900 bg-slate-100 dark:bg-slate-700 border-b-2 border-blue-600 md:border-b-0 md:border-r-2">
+            <Logo class="w-36 md:w-48" />
             <h1 class="text-4xl">Planning Poker</h1>
         </div>
-        <div class="w-full flex flex-col justify-center gap-4 p-12 h-[50vh] md:h-auto">
+        <div class="w-full flex flex-col justify-center gap-4 p-12 grow">
             <div class="mb-6 text-lg">
                 <h2 class="text-3xl mb-6">Welcome!</h2>
                 <p class="mb-3">Streamline your sprint planning and make estimation quick, fair, and fun.</p>
