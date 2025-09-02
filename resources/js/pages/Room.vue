@@ -221,7 +221,7 @@ onMounted(() => {
                         <PlayerCard v-for="(player, i) in otherPlayers" :key="i" :player="player"
                             :show-score="roomLocal.showScores" class="border-slate-400 dark:border-slate-700" />
                     </div>
-                    <div v-if="me !== undefined" class="flex justify-center px-3">
+                    <div v-if="me !== undefined && filteredPlayers.length > 0" class="flex justify-center px-3">
                         <PlayerCard :player="me" :show-score="true" class="border-blue-600" />
                     </div>
                 </div>

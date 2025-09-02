@@ -5,9 +5,11 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 withDefaults(defineProps<{
     blurBackground?: boolean,
     dismissable?: boolean,
+    size?: 'md' | 'lg' | 'xl'
 }>(), {
     blurBackground: false,
     dismissable: true,
+    size: 'md',
 })
 
 const show = defineModel()
@@ -18,7 +20,7 @@ const show = defineModel()
         <div :class="{ 'backdrop-blur-sm': blurBackground }" class=" flex overflow-y-auto overflow-x-hidden z-50 fixed justify-center items-center w-full inset-0
         h-full max-h-full backdrop-blur-sm">
 
-            <div class="relative p-4 w-full max-w-md max-h-full">
+            <div :class="`max-w-${size}`" class="relative p-4 w-full max-h-full">
                 <!-- Modal content -->
                 <div class="relative rounded-lg shadow-sm bg-slate-100 dark:bg-slate-800">
                     <!-- Modal header -->
