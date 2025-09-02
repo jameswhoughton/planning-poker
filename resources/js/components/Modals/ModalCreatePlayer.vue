@@ -3,6 +3,7 @@ import VButton from '@/components/VButton.vue';
 import VModal from '@/components/VModal.vue';
 import { InertiaForm, useForm } from '@inertiajs/vue3';
 import VInput from '../VInput.vue';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps<{
     roomUuid: string,
@@ -16,10 +17,14 @@ function createPlayer() {
 
     form.post(url)
 }
+
+const showModal = ref<boolean>(false)
+
+onMounted(() => showModal.value = true)
 </script>
 
 <template>
-    <VModal :model-value="true" blur-background :dismissable="false">
+    <VModal :model-value="showModal" blur-background :dismissable="false">
         <template #title>
             Join room
         </template>
