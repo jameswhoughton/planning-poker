@@ -3,16 +3,18 @@ import VButton from './VButton.vue';
 import { toast } from 'vue3-toastify';
 
 function share(): void {
-    const clipboardItem = new ClipboardItem({
-        'text/plain': window.location.href,
-    })
+    window.navigator.clipboard.writeText(window.location.href)
+        .then(() => toast('URL copied to clipboard'))
+        .catch((e: DOMException) => {
+            console.error(e)
 
-    window.navigator.clipboard.write([clipboardItem])
-
-    toast('URL copied to clipboard')
+            toast('Unable to copy, please check your browser permissions')
+        })
 }
+
+const canShare: boolean = typeof window.navigator.clipboard?.writeText === 'function'
 </script>
 
 <template>
-    <VButton type="button" @click="share">Share</VButton>
+    <VButton v-if="canShare" type="button" @click="share">Share</VButton>
 </template>
